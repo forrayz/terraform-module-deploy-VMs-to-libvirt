@@ -23,9 +23,9 @@ users:
       - ${var.instance_data["public_key"]}
     shell: /bin/bash
 
-growpart:
-  mode: auto
-  devices: ['/']
+# growpart:
+#   mode: auto
+#   devices: ['/']
 
 
 packages: ${var.instance_data["packages"]}
