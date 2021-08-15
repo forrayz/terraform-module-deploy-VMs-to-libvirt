@@ -1,5 +1,6 @@
 resource "libvirt_cloudinit_disk" "commoninit" {
   name = "${var.instance_data["project"]}-${var.instance_data["customer"]}-${var.instance_data["environment"]}-${var.instance_data["hostname"]}-${format("%02d", count.index+1)}.${var.instance_data["hostname_prefix"]}.cloud-init.iso"
+  #name = "${var.instance_data["project"]}-${var.instance_data["customer"]}-${var.instance_data["environment"]}-${var.instance_data["hostname"]}.${var.instance_data["hostname_prefix"]}.cloud-init.iso"
   # plan = "${var.plans["5USD"]}"
   pool = "default"
   count = "${var.instance_data["count"]}"  

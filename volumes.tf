@@ -9,7 +9,7 @@ resource "libvirt_volume" "instance_data-disk" {
 }
 
 resource "libvirt_volume" "os_volume" {
-  name   = "${var.instance_data["project"]}-${var.instance_data["customer"]}-${var.instance_data["environment"]}-${var.instance_data["hostname"]}-.${var.instance_data["hostname_prefix"]}-MasterVolume.qcow2"
+  name   = "${var.instance_data["project"]}-${var.instance_data["customer"]}-${var.instance_data["environment"]}-${var.instance_data["hostname"]}.${var.instance_data["hostname_prefix"]}-MasterVolume.qcow2"
     pool   = "default"
   #source = "http://192.168.254.1/cloud-images/bionic-server-cloudimg-amd64.img"
   source = "${var.instance_data["os-image"]}"

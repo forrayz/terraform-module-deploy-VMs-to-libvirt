@@ -27,11 +27,14 @@ polkit.addRule(function(action, subject) {
 });
 EOF
 ```
+## get images
+execute script scripts/get-images.sh this wil drop images to images/ folder
+
 
 ## Deploy your own stack
 see examples folder
 
 ### caveats:
- - currently only Centos6/7 and Ubuntu 16/18 seems to work
+ - currently only Centos6/7/8 and Ubuntu 16/18/21 seems to work Ubuntu 20 (focal) fails to boot
 ### future plans:
  - add support to debian and slim OSs such as CoreOS
