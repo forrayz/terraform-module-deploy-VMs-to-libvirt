@@ -46,7 +46,7 @@ variable "k8s-master"   {
     "vcpu"              = "1"
     "size"              = "53687091200" #50GB
     "memory"            = "4096"
-    "network"           = "enp4s0"
+    "network"           = "enp4s0" # this interface should exist on the host and it wil be used as macvtap device
     # namespace project-customer-environment-hostname.hostname_prefif
     "project"           = "myproject"
     "customer"          = "mycustomer"
@@ -56,7 +56,7 @@ variable "k8s-master"   {
     "hostname_prefix"   = "mylan.lan"
     "packages"          = "[qemu-guest-agent, vim, curl, wget,apt-transport-https, ca-certificates, software-properties-common ]"
     "version"           = "1.0"
-    "wait_4_lease"      = "false"
+    "wait_4_lease"      = "true"
     # user data
     "user"              = "forrayz"
     "gecos"             = "forrayz@hotmail.com"
@@ -117,7 +117,7 @@ variable "k8s-slave"   {
     "hostname_prefix"   = "mylan.lan"
     "packages"          = "[qemu-guest-agent, vim, curl, wget,apt-transport-https, ca-certificates, software-properties-common ]"
     "version"           = "1.0"
-    "wait_4_lease"      = "false"
+    "wait_4_lease"      = "true"
     # user data
     "user"              = "forrayz"
     "gecos"             = "forrayz@hotmail.com"
