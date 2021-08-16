@@ -30,6 +30,24 @@ EOF
 ## get images
 execute script scripts/get-images.sh this wil drop images to images/ folder
 
+## get etcdv3 up and avialable
+I prefer etcdv3 as a backend however this is upon you. Having a central backend hadfull to keep state files out of the project and ensure no paralell deploys conflicts.
+
+I am use docker-compose to get etcd3 up
+```yaml
+version: '2'
+
+services:
+  etcd:
+    image: 'bitnami/etcd:latest'
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+    ports:
+      - 2379:2379
+      - 2380:2380
+    
+```
 
 ## Deploy your own stack
 see examples folder
