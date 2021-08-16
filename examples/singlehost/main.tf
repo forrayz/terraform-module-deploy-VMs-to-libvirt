@@ -20,13 +20,19 @@ provider "libvirt" {
  }
 module k8s-master {
  source = "../../"
- instance_data       = var.k8s-master 
+ instance_data          = var.k8s-master 
+ network_address_ranges = var.network_address_ranges
  }
 
 # 1GB = 1073741824
 # centos6/7srv minimum  8589934592 8589934592
 # ubuntu16 minimum      2361393152
 # ubuntu 18 min         2361393152 
+
+variable "network_address_ranges" {
+  type    = list(string)
+  default = ["10.17.3.0/24", "2001:db8:ca2:2::1/64"]
+}
 
 variable "k8s-master"   {
     description = "Please adjust the following variables to refect  servers parameters "
@@ -46,7 +52,18 @@ variable "k8s-master"   {
     "vcpu"              = "1"
     "size"              = "53687091200" #50GB
     "memory"            = "4096"
-    "network"           = "enp4s0" # this interface should exist on the host and it wil be used as macvtap device
+    # network configuration
+    "network_name"   = "k8-network"
+    "dns_enabled"    = "true"
+    "dns_local_only" = "true"
+    # (Optional, default false)
+    # true: DNS requests under this domain will only be resolved by the
+    # virtual network's own DNS server
+    # false: Unresolved requests will be forwarded to the host's
+    # upstream DNS server if the virtual network's DNS server does not
+    # have an answer.
+    # namespace project-customer-environment-hostname.hostname_prefif
+    "network_mode"  = "nat" # mode can be: "nat" (default), "none", "route", "bridge"
     # namespace project-customer-environment-hostname.hostname_prefif
     "project"           = "myproject"
     "customer"          = "mycustomer"
@@ -80,7 +97,8 @@ output "k8s-master-IP_Addresses" {
 
 module k8s-slave {
  source = "../../"
- instance_data       = var.k8s-slave 
+ instance_data       = var.k8s-slave
+ network_address_ranges = var.network_address_ranges 
  }
 
 # 1GB = 1073741824
@@ -107,7 +125,18 @@ variable "k8s-slave"   {
     "vcpu"              = "1"
     "size"              = "53687091200" #50GB
     "memory"            = "4096"
-    "network"           = "enp4s0"
+     # network configuration
+    "network_name"   = "k8s_network"
+    "dns_enabled"    = "true"
+    "dns_local_only" = "true"
+    # (Optional, default false)
+    # true: DNS requests under this domain will only be resolved by the
+    # virtual network's own DNS server
+    # false: Unresolved requests will be forwarded to the host's
+    # upstream DNS server if the virtual network's DNS server does not
+    # have an answer.
+    # namespace project-customer-environment-hostname.hostname_prefif
+    "network_mode"  = "nat" # mode can be: "nat" (default), "none", "route", "bridge"
     # namespace project-customer-environment-hostname.hostname_prefif
     "project"           = "myproject"
     "customer"          = "mycustomer"

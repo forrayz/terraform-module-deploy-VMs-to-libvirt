@@ -9,15 +9,25 @@ resource "libvirt_domain" "server" {
   cloudinit = "${element(libvirt_cloudinit_disk.commoninit.*.id, count.index)}" 
   #cloudinit = libvirt_cloudinit_disk.commoninit.id
 
-  network_interface {
+  # network_interface {
+  #   wait_for_lease = "${var.instance_data["wait_4_lease"]}"
+  #     macvtap = "${var.instance_data["network"]}"
+  # }
+
+
+network_interface {
+    network_id     = libvirt_network.k8s_network.id
+    hostname       = "${var.instance_data["project"]}-${var.instance_data["customer"]}-${var.instance_data["environment"]}-${var.instance_data["hostname"]}-${format("%02d", count.index+1)}.${var.instance_data["hostname_prefix"]}"
+    # addresses      = ["10.17.3.3"]
+    # mac            = "AA:BB:CC:11:22:22"
     wait_for_lease = "${var.instance_data["wait_4_lease"]}"
-      macvtap = "${var.instance_data["network"]}"
   }
 
-# network_interface {
-#     network_name     = "default"
-#     wait_for_lease = true
-#   }
+
+network_interface {
+     network_name     = "default"
+     wait_for_lease = "${var.instance_data["wait_4_lease"]}"
+   }
   console {
     type        = "pty"
     target_port = "0"
